@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "DemoGame (Package)": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
+    },
+    "DemoGame (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
