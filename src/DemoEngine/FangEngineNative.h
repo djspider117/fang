@@ -21,5 +21,6 @@ namespace Fang::Native
 		CComPtr<IDXGIFactory2> _dxgiFactory;
 		CComPtr<ID3D11DeviceContext> _deviceContext;
 		CComPtr<IDXGISwapChain1> _swapChain;
+		CComPtr<ID3D11RenderTargetView> _rtv;
 	};
 }

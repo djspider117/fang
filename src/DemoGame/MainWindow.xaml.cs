@@ -1,13 +1,15 @@
 using Microsoft.UI.Xaml;
-using WinRT;
 using Fang;
-using DirectN;
 using System.Runtime.InteropServices;
+using System;
+using Microsoft.UI.Xaml.Media;
 
 namespace DemoGame;
 
 public sealed partial class MainWindow : Window
 {
+    public static Guid IID_ISwapChainPanelNative = new("63aad0b8-7c24-40ff-85a8-640d944cc325");
+
     private FangEngine? _engine;
 
     public MainWindow()
@@ -15,21 +17,21 @@ public sealed partial class MainWindow : Window
         InitializeComponent();
     }
 
-    public void panel_Loaded(object sender, RoutedEventArgs e)
+    public unsafe void panel_Loaded(object sender, RoutedEventArgs e)
     {
         panel.Loaded -= panel_Loaded;
 
-        var cast = panel.As<ISwapChainPanelNative>();
-        _engine = new FangEngine(Marshal.GetIUnknownForObject(cast));
+        var unk = Marshal.GetIUnknownForObject(panel);
+        Marshal.QueryInterface(unk, ref IID_ISwapChainPanelNative, out var interfacePointer);
+
+        _engine = new FangEngine(interfacePointer);
         _engine.Initialize((uint)panel.ActualWidth, (uint)panel.ActualHeight);
+
+        CompositionTarget.Rendered += CompositionTarget_Rendered;
     }
 
-    // note: this is *not* the same IID as DirectN.ISwapChainPanelNative which corresponds to the Windows.UI.Xaml.Media namespace
-    // this one corresponds to the Microsoft.UI.Xaml.Media namespace
-    [ComImport, Guid("63aad0b8-7c24-40ff-85a8-640d944cc325"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public partial interface ISwapChainPanelNative
+    private void CompositionTarget_Rendered(object? sender, RenderedEventArgs e)
     {
-        [PreserveSig]
-        HRESULT SetSwapChain(IDXGISwapChain swapChain);
+        _engine.Render();
     }
 }

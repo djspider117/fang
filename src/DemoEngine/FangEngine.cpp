@@ -24,6 +24,11 @@ namespace Fang
 
 		_engine->Render();
 	}
+
+	void FangEngine::Render()
+	{
+		_engine->Render();
+	}
 }
 
 void ThrowIfFailed(HRESULT hr, String^ msg)

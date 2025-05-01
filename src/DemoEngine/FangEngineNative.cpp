@@ -57,13 +57,20 @@ namespace Fang::Native
 			NULL, //don't restrict content output 
 			&_swapChain));
 
-		_swapChainContainer->SetSwapChain(_swapChain);
+		RETURN_FAILED(_swapChainContainer->SetSwapChain(_swapChain));
+
+		CComPtr<ID3D11Resource> backBuffer;
+		RETURN_FAILED(_swapChain->GetBuffer(0, __uuidof(ID3D11Resource), (void**)&backBuffer));
+		RETURN_FAILED(_d3dDevice->CreateRenderTargetView(backBuffer, nullptr, &_rtv));
 
 		return hr;
 	}
 
 	void FangEngineNative::Render()
 	{
+		const float color[] = { 0.4f, 0.1f, 0.9f, 1.0f };
+		_deviceContext->ClearRenderTargetView(_rtv, color);
 
+		_swapChain->Present(1, 0);
 	}
 }

@@ -13,6 +13,7 @@ namespace Fang
 		~FangEngine();
 
 		void Initialize(UINT initialWidth, UINT initialHeight);
+		void Render();
 
 	private:
 		IntPtr^ _swapChainPanelNativePtr;
