@@ -1,9 +1,11 @@
 #pragma once
 #include "pch.h"
-#include "FangGraphics.h"
 
 namespace Fang::Rendering
 {
+	// forward decl
+	class FangGraphics;
+
 	public interface IFangDrawable
 	{
 		virtual void Draw(FangGraphics& graphics) = 0;

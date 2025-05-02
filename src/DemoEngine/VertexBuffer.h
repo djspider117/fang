@@ -11,12 +11,12 @@ namespace Fang::Rendering::Bindables
 	public:
 		VertexBuffer(FangGraphics& graphics)
 		{
-			THROW_FAILED_NOHR(CreateDefaultBuffer<Vertex>(D3D11_BIND_VERTEX_BUFFER, nullptr, 0, &_buffer));
+			THROW_FAILED_NOHR(CreateDefaultBuffer<Vertex>(graphics.GetDevice(), D3D11_BIND_VERTEX_BUFFER, nullptr, 0, &_buffer));
 		}
 
 		VertexBuffer(FangGraphics& graphics, const Vertex* vertices, UINT verticesSize)
 		{
-			THROW_FAILED_NOHR(CreateDefaultBuffer<Vertex>(D3D11_BIND_VERTEX_BUFFER, vertices, verticesSize, &_buffer));
+			THROW_FAILED_NOHR(CreateDefaultBuffer<Vertex>(graphics.GetDevice(), D3D11_BIND_VERTEX_BUFFER, vertices, verticesSize, &_buffer));
 		}
 
 		virtual void Bind(FangGraphics& graphics) noexcept override

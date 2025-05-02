@@ -10,12 +10,12 @@ namespace Fang::Rendering::Bindables
 	public:
 		IndexBuffer(FangGraphics& graphics)
 		{
-			THROW_FAILED_NOHR(CreateDefaultBuffer<USHORT>(D3D11_BIND_INDEX_BUFFER, nullptr, 0, &_buffer));
+			THROW_FAILED_NOHR(CreateDefaultBuffer<USHORT>(graphics.GetDevice(), D3D11_BIND_INDEX_BUFFER, nullptr, 0, &_buffer));
 		}
 
 		IndexBuffer(FangGraphics& graphics, const USHORT* indices, UINT indicesSize)
 		{
-			THROW_FAILED_NOHR(CreateDefaultBuffer<USHORT>(D3D11_BIND_INDEX_BUFFER, indices, indicesSize, &_buffer));
+			THROW_FAILED_NOHR(CreateDefaultBuffer<USHORT>(graphics.GetDevice(), D3D11_BIND_INDEX_BUFFER, indices, indicesSize, &_buffer));
 		}
 
 		virtual void Bind(FangGraphics& graphics) noexcept override

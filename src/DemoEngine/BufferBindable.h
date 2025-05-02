@@ -28,29 +28,29 @@ namespace Fang::Rendering::Bindables
 		}
 
 		template<typename T>
-		inline HRESULT CreateDefaultBuffer(D3D11_BIND_FLAG bindFlag, const T* initData, UINT initDataSize, ID3D11Buffer** ppBuffer)
+		inline HRESULT CreateDefaultBuffer(ID3D11Device* device, D3D11_BIND_FLAG bindFlag, const T* initData, UINT initDataSize, ID3D11Buffer** ppBuffer)
 		{
-			return CreateBuffer<T>(D3D11_USAGE_DEFAULT, bindFlag, initData, initDataSize, ppBuffer);
+			return CreateBuffer<T>(device, D3D11_USAGE_DEFAULT, bindFlag, initData, initDataSize, ppBuffer, (D3D11_CPU_ACCESS_FLAG)0);
 		}
 		template<typename T>
-		inline HRESULT CreateImmutableBuffer(D3D11_BIND_FLAG bindFlag, const T* initData, UINT initDataSize, ID3D11Buffer** ppBuffer)
+		inline HRESULT CreateImmutableBuffer(ID3D11Device* device, D3D11_BIND_FLAG bindFlag, const T* initData, UINT initDataSize, ID3D11Buffer** ppBuffer)
 		{
-			return CreateBuffer<T>(D3D11_USAGE_IMMUTABLE, bindFlag, initData, initDataSize, ppBuffer);
+			return CreateBuffer<T>(device, D3D11_USAGE_IMMUTABLE, bindFlag, initData, initDataSize, ppBuffer, (D3D11_CPU_ACCESS_FLAG)0);
 		}
 		template<typename T>
-		inline HRESULT CreateDynamicBufferWrite(D3D11_BIND_FLAG bindFlag, const T* initData, UINT initDataSize, ID3D11Buffer** ppBuffer)
+		inline HRESULT CreateDynamicBufferWrite(ID3D11Device* device, D3D11_BIND_FLAG bindFlag, const T* initData, UINT initDataSize, ID3D11Buffer** ppBuffer)
 		{
-			return CreateBuffer<T>(D3D11_USAGE_DYNAMIC, bindFlag, initData, initDataSize, ppBuffer, D3D11_CPU_ACCESS_WRITE);
+			return CreateBuffer<T>(device, D3D11_USAGE_DYNAMIC, bindFlag, initData, initDataSize, ppBuffer, D3D11_CPU_ACCESS_WRITE);
 		}
 		template<typename T>
-		inline HRESULT CreateDynamicBufferRead(D3D11_BIND_FLAG bindFlag, const T* initData, UINT initDataSize, ID3D11Buffer** ppBuffer)
+		inline HRESULT CreateDynamicBufferRead(ID3D11Device* device, D3D11_BIND_FLAG bindFlag, const T* initData, UINT initDataSize, ID3D11Buffer** ppBuffer)
 		{
-			return CreateBuffer<T>(D3D11_USAGE_DYNAMIC, bindFlag, initData, initDataSize, ppBuffer, D3D11_CPU_ACCESS_READ);
+			return CreateBuffer<T>(device, D3D11_USAGE_DYNAMIC, bindFlag, initData, initDataSize, ppBuffer, D3D11_CPU_ACCESS_READ);
 		}
 		template<typename T>
-		inline HRESULT CreateDynamicBufferReadWrite(D3D11_BIND_FLAG bindFlag, const T* initData, UINT initDataSize, ID3D11Buffer** ppBuffer)
+		inline HRESULT CreateDynamicBufferReadWrite(ID3D11Device* device, D3D11_BIND_FLAG bindFlag, const T* initData, UINT initDataSize, ID3D11Buffer** ppBuffer)
 		{
-			return CreateBuffer<T>(D3D11_USAGE_DYNAMIC, bindFlag, initData, initDataSize, ppBuffer, D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE);
+			return CreateBuffer<T>(device, D3D11_USAGE_DYNAMIC, bindFlag, initData, initDataSize, ppBuffer, D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE);
 		}
 
 	protected:

@@ -7,12 +7,13 @@
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "InputLayout.h"
+#include "Topology.h"
 
 using namespace Fang::Rendering::Bindables;
 
 namespace Fang::Rendering::Drawables
 {
-	HRESULT CreateDemoDrawable(FangGraphics& gfx, DrawableBase** ppDrawable)
+	HRESULT CreateDemoDrawable(FangGraphics& gfx, IFangDrawable** ppDrawable)
 	{
 		const Vertex vertices[] =
 		{
@@ -64,6 +65,7 @@ namespace Fang::Rendering::Drawables
 
 		auto transform = DirectX::XMMatrixRotationZ(15);
 
+		Topology* topo = new Topology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		VertexBuffer* vbuff = new VertexBuffer(gfx, vertices, std::size(vertices));
 		IndexBuffer* ibuff = new IndexBuffer(gfx, indices, std::size(indices));
 		ConstantBuffers* cbuff = new ConstantBuffers(gfx, &transform, 1);
@@ -71,7 +73,7 @@ namespace Fang::Rendering::Drawables
 		PixelShader* ps = new PixelShader(gfx, L"PixelShader.cso");
 		InputLayout* il = new InputLayout(gfx, vs, ied, std::size(ied));
 
-		std::vector<IFangBindable*> bindables{ vbuff, ibuff, cbuff, vs, ps, il };
+		std::vector<IFangBindable*> bindables{ topo, vbuff, ibuff, cbuff, vs, ps, il };
 
 		*ppDrawable = new DrawableBase(transform, bindables);
 

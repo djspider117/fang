@@ -37,5 +37,5 @@ namespace Fang::Rendering::Drawables
 		XMMATRIX _transform;
 	};
 
-	static HRESULT CreateDemoDrawable(DrawableBase** ppDrawable);
+	HRESULT CreateDemoDrawable(FangGraphics& gfx, IFangDrawable** ppDrawable);
 }
