@@ -66,9 +66,9 @@ namespace Fang::Rendering::Drawables
 		auto transform = DirectX::XMMatrixRotationZ(15);
 
 		Topology* topo = new Topology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		VertexBuffer* vbuff = new VertexBuffer(gfx, vertices, std::size(vertices));
-		IndexBuffer* ibuff = new IndexBuffer(gfx, indices, std::size(indices));
-		ConstantBuffers* cbuff = new ConstantBuffers(gfx, &transform, 1);
+		VertexBuffer* vbuff = new VertexBuffer(gfx, vertices, sizeof(vertices));
+		IndexBuffer* ibuff = new IndexBuffer(gfx, indices, sizeof(indices));
+		ConstantBuffers* cbuff = new ConstantBuffers(gfx, &transform, sizeof(transform));
 		VertexShader* vs = new VertexShader(gfx, L"VertexShader.cso");
 		PixelShader* ps = new PixelShader(gfx, L"PixelShader.cso");
 		InputLayout* il = new InputLayout(gfx, vs, ied, std::size(ied));

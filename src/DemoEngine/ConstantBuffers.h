@@ -17,7 +17,7 @@ namespace Fang::Rendering::Bindables
 			bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 			bufferDesc.StructureByteStride = sizeof(ConstantBuffer);
 			bufferDesc.ByteWidth = initDataSize;
-			bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			bufferDesc.CPUAccessFlags = 0;
 
 			D3D11_SUBRESOURCE_DATA subresData{};
 			subresData.pSysMem = initData;

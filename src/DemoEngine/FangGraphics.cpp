@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "FangGraphics.h"
 #include "Vertex.h"
+#include "DrawableBase.h"
 
 namespace Fang::Rendering
 {
@@ -37,67 +38,7 @@ namespace Fang::Rendering
 		RETURN_FAILED(_dxgiDevice->GetAdapter(&_dxgiAdapter));
 		RETURN_FAILED(_dxgiAdapter->GetParent(__uuidof(IDXGIFactory2), (void**)&_dxgiFactory));
 
-		const Vertex vertices[] =
-		{
-			// Front face
-			{ -0.5f,  0.5f, 0, 255, 0, 0 }, // 0: top-left front
-			{  0.5f,  0.5f, 0, 255, 0, 0 }, // 1: top-right front
-			{  0.5f, -0.5f, 0, 255, 0, 0 }, // 2: bottom-right front
-			{ -0.5f, -0.5f, 0, 255, 0, 0 }, // 3: bottom-left front
-
-			// Back face
-			{ -0.5f,  0.5f,  0.5f, 0, 0, 255}, // 4: top-left back
-			{  0.5f,  0.5f,  0.5f, 0, 0, 255}, // 5: top-right back
-			{  0.5f, -0.5f,  0.5f, 0, 0, 255}, // 6: bottom-right back
-			{ -0.5f, -0.5f,  0.5f, 0, 0, 255}, // 7: bottom-left back
-		};
-
-		const USHORT indices[] =
-		{
-			// Front face
-			0, 1, 2,
-			0, 2, 3,
-
-			// Back face
-			5, 4, 7,
-			5, 7, 6,
-
-			// Left face
-			4, 0, 3,
-			4, 3, 7,
-
-			// Right face
-			1, 5, 6,
-			1, 6, 2,
-
-			// Top face
-			4, 5, 1,
-			4, 1, 0,
-
-			// Bottom face
-			3, 2, 6,
-			3, 6, 7
-		};
-
-		RETURN_FAILED(CreateDefaultBuffer<Vertex>(D3D11_BIND_VERTEX_BUFFER, vertices, sizeof(vertices), &_vertexBuff));
-		RETURN_FAILED(CreateDefaultBuffer<USHORT>(D3D11_BIND_INDEX_BUFFER, indices, sizeof(indices), &_indexBuff));
-		RETURN_FAILED(CreateDefaultBuffer<ConstantBuffer>(D3D11_BIND_CONSTANT_BUFFER, &_worldTransform, sizeof(_worldTransform), &_worldTransformBuffer));
-
-		CComPtr<ID3DBlob> vsBlob;
-		CComPtr<ID3DBlob> psBlob;
-
-		RETURN_FAILED(D3DReadFileToBlob(GetShaderPath(L"VertexShader.cso").c_str(), &vsBlob));
-		RETURN_FAILED(D3DReadFileToBlob(GetShaderPath(L"PixelShader.cso").c_str(), &psBlob));
-
-		RETURN_FAILED(_d3dDevice->CreateVertexShader(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), nullptr, &_vertexShader));
-		RETURN_FAILED(_d3dDevice->CreatePixelShader(psBlob->GetBufferPointer(), psBlob->GetBufferSize(), nullptr, &_pixelShader));
-
-		const D3D11_INPUT_ELEMENT_DESC ied[] =
-		{
-			{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{ "VertexColor", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
-		};
-		RETURN_FAILED(_d3dDevice->CreateInputLayout(ied, std::size(ied), vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), &_inputLayout));
+		RETURN_FAILED(Fang::Rendering::Drawables::CreateDemoDrawable(*this, &_demo));
 
 		return hr;
 	}
@@ -187,17 +128,10 @@ namespace Fang::Rendering
 
 		//DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL forces us to rebind the rtv and the dsv
 		_deviceContext->OMSetRenderTargets(1, &(_rtv.p), _dsv);
-
-		_deviceContext->IASetInputLayout(_inputLayout);
-		_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		_deviceContext->IASetVertexBuffers(0, 1, &(_vertexBuff.p), &stride, &offset);
-		_deviceContext->IASetIndexBuffer(_indexBuff, DXGI_FORMAT_R16_UINT, 0);
-
-		_deviceContext->VSSetShader(_vertexShader, nullptr, 0);
-		_deviceContext->VSSetConstantBuffers(0, 1, &(_worldTransformBuffer.p));
-
-		_deviceContext->PSSetShader(_pixelShader, nullptr, 0);
 		_deviceContext->RSSetViewports(1, &_viewport);
+
+		_demo->Draw(*this);
+
 		_deviceContext->DrawIndexed(36, 0, 0);
 
 		_swapChain->Present(1, 0);

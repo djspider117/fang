@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "Vertex.h"
 #include "IFangSubsystem.h"
+#include "IFangDrawable.h"
 
 using namespace DirectX;
 using namespace Fang::Core;
@@ -87,14 +88,6 @@ namespace Fang::Rendering
 		CComPtr<ID3D11DepthStencilView> _dsv;
 		CComPtr<ID3D11Texture2D> _depthStencil;
 
-		CComPtr<ID3D11Buffer> _vertexBuff;
-		CComPtr<ID3D11Buffer> _indexBuff;
-
-		CComPtr<ID3D11VertexShader> _vertexShader;
-		CComPtr<ID3D11PixelShader> _pixelShader;
-
-		CComPtr<ID3D11InputLayout> _inputLayout;
-
 		D3D11_VIEWPORT _viewport{};
 
 		std::wstring _shaderCachePath;
@@ -102,6 +95,7 @@ namespace Fang::Rendering
 
 		// temp stuff
 
+		IFangDrawable* _demo;
 		ConstantBuffer _worldTransform;
 		float angle;
 
