@@ -9,7 +9,6 @@ namespace Fang::Rendering
 		_swapChainContainer(swapChainPanel),
 		_shaderCachePath(shaderCacheLocation)
 	{
-		_worldTransform.transform = DirectX::XMMatrixIdentity();
 	}
 
 	HRESULT FangGraphics::CreateDeviceResources()

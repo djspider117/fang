@@ -8,6 +8,7 @@
 #include "PixelShader.h"
 #include "InputLayout.h"
 #include "Topology.h"
+#include "Vertex.h"
 
 using namespace Fang::Rendering::Bindables;
 
@@ -63,19 +64,19 @@ namespace Fang::Rendering::Drawables
 			{ "VertexColor", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
 		};
 
-		auto transform = DirectX::XMMatrixRotationZ(15);
+		DemoBuffer transform = { DirectX::XMMatrixRotationZ(15) };
 
 		Topology* topo = new Topology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		VertexBuffer* vbuff = new VertexBuffer(gfx, vertices, sizeof(vertices));
 		IndexBuffer* ibuff = new IndexBuffer(gfx, indices, sizeof(indices));
-		ConstantBuffers* cbuff = new ConstantBuffers(gfx, &transform, sizeof(transform));
+		ConstantBufferBase<DemoBuffer>* cbuff = new VertexConstantBuffer<DemoBuffer>(gfx, transform);
 		VertexShader* vs = new VertexShader(gfx, L"VertexShader.cso");
 		PixelShader* ps = new PixelShader(gfx, L"PixelShader.cso");
 		InputLayout* il = new InputLayout(gfx, vs, ied, std::size(ied));
 
 		std::vector<IFangBindable*> bindables{ topo, vbuff, ibuff, cbuff, vs, ps, il };
 
-		*ppDrawable = new DrawableBase(transform, bindables);
+		*ppDrawable = new DrawableBase(transform.transform, bindables);
 
 		return S_OK;
 	}

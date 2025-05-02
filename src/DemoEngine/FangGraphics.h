@@ -96,7 +96,6 @@ namespace Fang::Rendering
 		// temp stuff
 
 		IFangDrawable* _demo;
-		ConstantBuffer _worldTransform;
 		float angle;
 
 		CComPtr<ID3D11Buffer> _worldTransformBuffer;

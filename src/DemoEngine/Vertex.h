@@ -16,7 +16,7 @@ namespace Fang::Rendering
 		byte A;
 	};
 
-	struct ConstantBuffer
+	struct DemoBuffer
 	{
 		DirectX::XMMATRIX transform;
 	};

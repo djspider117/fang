@@ -2,17 +2,18 @@
 #include "pch.h"
 #include "IFangBindable.h"
 #include "BufferBindable.h"
+#include "Vertex.h"
 
 namespace Fang::Rendering::Bindables
 {
-
 	public class VertexBuffer : public BufferBindable
 	{
 	public:
 		
-		VertexBuffer(FangGraphics& graphics, const Vertex* vertices, UINT verticesSize)
+		template<class T>
+		VertexBuffer(FangGraphics& graphics, const T* vertices, UINT verticesSize)
 		{
-			THROW_FAILED_NOHR(CreateDefaultBuffer<Vertex>(graphics.GetDevice(), D3D11_BIND_VERTEX_BUFFER, vertices, verticesSize, &_buffer));
+			THROW_FAILED_NOHR(CreateDefaultBuffer<T>(graphics.GetDevice(), D3D11_BIND_VERTEX_BUFFER, vertices, verticesSize, &_buffer));
 		}
 
 		virtual void Bind(FangGraphics& graphics) noexcept override
