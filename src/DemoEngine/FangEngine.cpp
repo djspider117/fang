@@ -1,47 +1,48 @@
 #include "pch.h"
 #include "FangEngine.h"
-
-using namespace Fang::Native;
+#include "FangDev.h"
+#include <msclr/marshal_cppstd.h>
 
 namespace Fang
 {
-	FangEngine::FangEngine(IntPtr^ swapChainPanelNativePtr) :
-		_swapChainPanelNativePtr(swapChainPanelNativePtr)
-	{
-		auto nativeSwapChainPanel = reinterpret_cast<ISwapChainPanelNative*>(swapChainPanelNativePtr->ToPointer());
-		_engine = new FangEngineNative(nativeSwapChainPanel);
+	FangEngine::FangEngine(IntPtr^ swapChainPanelNativePtr, String^ shaderCacheLocation) :
+		_swapChainPanelNativePtr(reinterpret_cast<ISwapChainPanelNative*>(swapChainPanelNativePtr->ToPointer())),
+		_shaderCacheLocation(shaderCacheLocation) {
 	}
 
 	FangEngine::~FangEngine()
 	{
-		delete _engine;
+		_initialized = false;
+		delete _graphicsSubsystem;
 	}
 
-	void FangEngine::Initialize(UINT initialWidth, UINT initialHeight)
+	void FangEngine::Initialize(UINT width, UINT height)
 	{
-		ThrowIfFailed(_engine->CreateDeviceResources());
-		ThrowIfFailed(_engine->CreateSizeDependentResources(initialWidth, initialHeight));
+		msclr::interop::marshal_context context;
+		_graphicsSubsystem = new FangGraphics(_swapChainPanelNativePtr, context.marshal_as<std::wstring>(_shaderCacheLocation));
 
-		_engine->Render();
+		ThrowIfFailed(_graphicsSubsystem->CreateDeviceResources());
+		ThrowIfFailed(_graphicsSubsystem->CreateSizeDependentResources(width, height));
+
+		_initialized = true;
 	}
 
-	void FangEngine::Render()
+	void FangEngine::HandleSizeChanged(UINT width, UINT height)
 	{
-		_engine->Render();
-	}
-}
+		_initialized = false;
 
-void ThrowIfFailed(HRESULT hr, String^ msg)
-{
-	if (FAILED(hr))
+		ThrowIfFailed(_graphicsSubsystem->Stop());
+		delete _graphicsSubsystem;
+		_graphicsSubsystem = nullptr;
+
+		Initialize(width, height);
+	}
+
+	void FangEngine::Tick(double deltaTime)
 	{
-		auto inner = System::Runtime::InteropServices::Marshal::GetExceptionForHR(hr);
-		throw gcnew Fang::FangException(msg, inner);
-	}
-}
+		if (!_initialized)
+			return;
 
-void ThrowIfFailed(HRESULT hr)
-{
-	if (FAILED(hr))
-		System::Runtime::InteropServices::Marshal::ThrowExceptionForHR(hr);
+		_graphicsSubsystem->Render(deltaTime);
+	}
 }

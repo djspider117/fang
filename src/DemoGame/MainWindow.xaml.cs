@@ -11,6 +11,7 @@ public sealed partial class MainWindow : Window
     public static Guid IID_ISwapChainPanelNative = new("63aad0b8-7c24-40ff-85a8-640d944cc325");
 
     private FangEngine? _engine;
+    private DateTime _lastRender;
 
     public MainWindow()
     {
@@ -24,7 +25,7 @@ public sealed partial class MainWindow : Window
         var unk = Marshal.GetIUnknownForObject(panel);
         Marshal.QueryInterface(unk, ref IID_ISwapChainPanelNative, out var interfacePointer);
 
-        _engine = new FangEngine(interfacePointer);
+        _engine = new FangEngine(interfacePointer, @"C:\Work\fang\src\CompiledShaderCache");
         _engine.Initialize((uint)panel.ActualWidth, (uint)panel.ActualHeight);
 
         CompositionTarget.Rendered += CompositionTarget_Rendered;
@@ -32,6 +33,10 @@ public sealed partial class MainWindow : Window
 
     private void CompositionTarget_Rendered(object? sender, RenderedEventArgs e)
     {
-        _engine.Render();
+        var now = DateTime.Now;
+
+        var deltaTime = now - _lastRender;
+        _engine?.Render(deltaTime.TotalSeconds);
+        _lastRender = now;
     }
 }

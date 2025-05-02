@@ -1,27 +1,29 @@
 #pragma once
 
-#include "FangEngineNative.h"
+#include "FangGraphics.h"
 
 using namespace System;
+using namespace Fang::Core;
+using namespace Fang::Rendering;
 
 namespace Fang
 {
 	public ref class FangEngine
 	{
 	public:
-		FangEngine(IntPtr^ swapChainPanelNativePtr);
+		FangEngine(IntPtr^ swapChainPanelNativePtr, String^ shaderCacheLocation);
 		~FangEngine();
 
 		void Initialize(UINT initialWidth, UINT initialHeight);
-		void Render();
+		void HandleSizeChanged(UINT initialWidth, UINT initialHeight);
+
+		void Tick(double deltaTime);
 
 	private:
-		IntPtr^ _swapChainPanelNativePtr;
-		Fang::Native::FangEngineNative* _engine;
+		ISwapChainPanelNative* _swapChainPanelNativePtr;
+		String^ _shaderCacheLocation;
+		FangGraphics* _graphicsSubsystem;
+
+		bool _initialized;
 	};
-
-
-}
-
-void ThrowIfFailed(HRESULT hr, String^ msg);
-void ThrowIfFailed(HRESULT hr);
+};
