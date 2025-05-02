@@ -16,6 +16,9 @@
     <Filter Include="Rendering\Bindables">
       <UniqueIdentifier>{bc7eae58-3cd2-4098-99e3-64d75f6310cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Rendering\Drawables">
+      <UniqueIdentifier>{d598879d-5b40-450f-b94f-7da38d90144b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FangEngine.h">
@@ -44,6 +47,33 @@
     <ClInclude Include="Topology.h">
       <Filter>Rendering\Bindables</Filter>
     </ClInclude>
+    <ClInclude Include="FangExceptionNative.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>Rendering\Bindables</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferBindable.h">
+      <Filter>Rendering\Bindables</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Rendering\Bindables</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShader.h">
+      <Filter>Rendering\Bindables</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelShader.h">
+      <Filter>Rendering\Bindables</Filter>
+    </ClInclude>
+    <ClInclude Include="InputLayout.h">
+      <Filter>Rendering\Bindables</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBuffers.h">
+      <Filter>Rendering\Bindables</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableBase.h">
+      <Filter>Rendering\Drawables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FangEngine.cpp">
@@ -54,6 +84,10 @@
     </ClCompile>
     <ClCompile Include="FangDev.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="DrawableBase.cpp">
+      <Filter>Rendering\Drawables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

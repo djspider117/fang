@@ -1,10 +1,11 @@
 #pragma once
 #include "IFangBindable.h"
 
-namespace Fang::Rendering
+namespace Fang::Rendering::Bindables
 {
 	public class Topology : public IFangBindable
 	{
+	public:
 		Topology(D3D11_PRIMITIVE_TOPOLOGY topology) :
 			_topology(topology)
 		{
@@ -13,7 +14,7 @@ namespace Fang::Rendering
 
 		virtual void Bind(FangGraphics& graphics) noexcept override
 		{
-			graphics.GetDeviceContext()->IASetPrimitiveTopology(_topology);
+			graphics.GetContext()->IASetPrimitiveTopology(_topology);
 		}
 
 	private:

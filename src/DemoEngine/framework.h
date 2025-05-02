@@ -11,19 +11,14 @@
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
 
-#include "FangException.h"
+#include "FangExceptionNative.h"
 
 // Use this macro after you defined HRESULT hr in your code
 #define RETURN_FAILED(x) if(FAILED(hr = x)) return hr;
+#define THROW_FAILED(x) if(FAILED(hr = x)) throw Fang::Core::HResultException(hr);
+#define THROW_FAILED_NOHR(x) HRESULT hr = S_OK; if(FAILED(hr = x)) throw Fang::Core::HResultException(hr);
 
-// Direct3D 11 core
 #pragma comment(lib, "d3d11.lib")
-
-// DXGI (for swap chains, etc.)
 #pragma comment(lib, "dxgi.lib")
-
-// D3DCompiler (for compiling HLSL shaders)
 #pragma comment(lib, "d3dcompiler.lib")
-
-// Optional debug layer (only works with debug device)
 #pragma comment(lib, "dxguid.lib")

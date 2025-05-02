@@ -185,6 +185,9 @@ namespace Fang::Rendering
 		const UINT stride = sizeof(Vertex);
 		const UINT offset = 0;
 
+		//DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL forces us to rebind the rtv and the dsv
+		_deviceContext->OMSetRenderTargets(1, &(_rtv.p), _dsv);
+
 		_deviceContext->IASetInputLayout(_inputLayout);
 		_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		_deviceContext->IASetVertexBuffers(0, 1, &(_vertexBuff.p), &stride, &offset);
@@ -192,9 +195,6 @@ namespace Fang::Rendering
 
 		_deviceContext->VSSetShader(_vertexShader, nullptr, 0);
 		_deviceContext->VSSetConstantBuffers(0, 1, &(_worldTransformBuffer.p));
-
-		//DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL forces us to rebind the rtv and the dsv
-		_deviceContext->OMSetRenderTargets(1, &(_rtv.p), _dsv);
 
 		_deviceContext->PSSetShader(_pixelShader, nullptr, 0);
 		_deviceContext->RSSetViewports(1, &_viewport);

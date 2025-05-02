@@ -1,4 +1,6 @@
 #include "FangDev.h"
+#include "pch.h"
+#include "FangException.h"
 
 void ThrowIfFailed(HRESULT hr, String^ msg)
 {

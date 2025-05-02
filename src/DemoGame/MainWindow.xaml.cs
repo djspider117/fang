@@ -36,7 +36,7 @@ public sealed partial class MainWindow : Window
         var now = DateTime.Now;
 
         var deltaTime = now - _lastRender;
-        _engine?.Render(deltaTime.TotalSeconds);
+        _engine?.Tick(deltaTime.TotalSeconds);
         _lastRender = now;
     }
 }

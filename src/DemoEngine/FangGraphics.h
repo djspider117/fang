@@ -14,19 +14,19 @@ namespace Fang::Rendering
 	public:
 		FangGraphics(ISwapChainPanelNative* swapChainPanel, std::wstring shaderCacheLocation);
 
-		HRESULT Start() override {}
-		HRESULT Stop() override {}
+		HRESULT Start() override { return S_OK; }
+		HRESULT Stop() override { return S_OK; }
 
 		HRESULT CreateDeviceResources();
 		HRESULT CreateSizeDependentResources(UINT width, UINT height);
 
 		void Render(double deltaTime);
 
-		inline ID3D11DeviceContext* GetDeviceContext() const noexcept { return _deviceContext.p; }
+		inline ID3D11DeviceContext* GetContext() const noexcept { return _deviceContext.p; }
 		inline ID3D11Device* GetDevice() const noexcept { return _d3dDevice.p; }
 
-	private:
 		std::wstring GetShaderPath(std::wstring shaderName) const;
+	private:
 
 		template<typename T>
 		HRESULT CreateBuffer(D3D11_USAGE usage, D3D11_BIND_FLAG bindFlag, const T* initData, UINT initDataSize, ID3D11Buffer** ppBuffer, D3D11_CPU_ACCESS_FLAG cpuAccessFlags = (D3D11_CPU_ACCESS_FLAG)0)

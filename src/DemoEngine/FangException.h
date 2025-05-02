@@ -4,7 +4,7 @@ using namespace System;
 
 namespace Fang
 {
-	public ref class FangException : Exception
+	public ref class FangException : public Exception
 	{
 	public:
 		FangException(String^ message) : Exception(message) { }
