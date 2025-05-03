@@ -168,7 +168,7 @@ namespace Fang::Rendering::Drawables
 	DirectX::XMMATRIX DemoCube::GetTransform() const
 	{
 		if (_textured)
-			return DirectX::XMMatrixScaling(25, 25, 25) * DirectX::XMMatrixRotationZ(_rotX / 6) * DirectX::XMMatrixRotationY(_rotX /6 );
+			return DirectX::XMMatrixScaling(25, 25, 25);
 
 		if (UseSin)
 			return DirectX::XMMatrixRotationZ(_rotX) * DirectX::XMMatrixRotationY(_rotX) * DirectX::XMMatrixTranslation(OffsetX, 2.0f, (sin(_rotX) + 1) * 5 + 3);
