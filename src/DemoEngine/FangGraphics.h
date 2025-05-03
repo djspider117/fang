@@ -3,13 +3,14 @@
 #include "pch.h"
 #include "Vertex.h"
 #include "IFangSubsystem.h"
-#include "IFangDrawable.h"
 
 using namespace DirectX;
 using namespace Fang::Core;
 
 namespace Fang::Rendering
 {
+	interface IFangDrawable;
+
 	public class FangGraphics : public IFangSubsystem
 	{
 	public:

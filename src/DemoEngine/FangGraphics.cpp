@@ -131,7 +131,7 @@ namespace Fang::Rendering
 
 		_demo->Draw(*this);
 
-		_deviceContext->DrawIndexed(36, 0, 0);
+		//_deviceContext->DrawIndexed(36, 0, 0);
 
 		_swapChain->Present(1, 0);
 	}

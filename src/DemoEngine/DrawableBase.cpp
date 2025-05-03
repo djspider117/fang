@@ -2,13 +2,13 @@
 #include "pch.h"
 
 #include "VertexBuffer.h"
-#include "IndexBuffer.h"
 #include "ConstantBuffers.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "InputLayout.h"
 #include "Topology.h"
 #include "Vertex.h"
+#include "IndexBuffer.h"
 
 using namespace Fang::Rendering::Bindables;
 
@@ -74,10 +74,42 @@ namespace Fang::Rendering::Drawables
 		PixelShader* ps = new PixelShader(gfx, L"PixelShader.cso");
 		InputLayout* il = new InputLayout(gfx, vs, ied, std::size(ied));
 
-		std::vector<IFangBindable*> bindables{ topo, vbuff, ibuff, cbuff, vs, ps, il };
+		auto rv = new DrawableBase(transform.transform);
+		rv->AddBindable(topo);
+		rv->AddBindable(vbuff);
+		rv->AddBindable(cbuff);
+		rv->AddBindable(vs);
+		rv->AddBindable(ps);
+		rv->AddBindable(il);
+		rv->SetIndexBuffer(ibuff);
 
-		*ppDrawable = new DrawableBase(transform.transform, bindables);
+		*ppDrawable = rv;
 
 		return S_OK;
+	}
+
+	inline void DrawableBase::AddBindable(IFangBindable* bindable) noexcept
+	{
+		_bindables.push_back(bindable);
+	}
+
+	inline void DrawableBase::SetIndexBuffer(IndexBuffer* ibuff) noexcept
+	{
+		_indexBuffer = ibuff;
+		_bindables.push_back((IFangBindable*)_indexBuffer);
+	}
+
+	inline void DrawableBase::Update(double deltaTime)
+	{
+		//do nothing, yet
+	}
+
+	inline void DrawableBase::Draw(FangGraphics& graphics)
+	{
+		for (auto& bindable : _bindables)
+		{
+			bindable->Bind(graphics);
+		}
+		graphics.GetContext()->DrawIndexed(_indexBuffer->GetCount(), 0, 0);
 	}
 }
