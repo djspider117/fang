@@ -8,7 +8,7 @@ namespace Fang::Rendering::Bindables
 	public class InputLayout : public IFangBindable
 	{
 	public:
-		InputLayout(FangGraphics& graphics, const VertexShader* vs, const D3D11_INPUT_ELEMENT_DESC* ied, SIZE_T iedSize)
+		InputLayout(FangGraphics& graphics, const VertexShader* vs, const D3D11_INPUT_ELEMENT_DESC* ied, UINT iedSize)
 		{
 			THROW_FAILED_NOHR(graphics.GetDevice()->CreateInputLayout(ied, iedSize, vs->GetShaderBytecode(), vs->GetShaderBytecodeSize(), &_inputLayout));
 		}

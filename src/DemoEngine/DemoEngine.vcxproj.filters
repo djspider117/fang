@@ -74,6 +74,12 @@
     <ClInclude Include="DrawableBase.h">
       <Filter>Rendering\Drawables</Filter>
     </ClInclude>
+    <ClInclude Include="DemoCube.h">
+      <Filter>Rendering\Drawables</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformConstantBuffer.h">
+      <Filter>Rendering\Bindables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FangEngine.cpp">
@@ -88,6 +94,12 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="DrawableBase.cpp">
       <Filter>Rendering\Drawables</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoCube.cpp">
+      <Filter>Rendering\Drawables</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformConstantBuffer.cpp">
+      <Filter>Rendering\Bindables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

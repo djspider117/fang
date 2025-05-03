@@ -33,13 +33,6 @@ namespace Fang::Rendering::Bindables
 			return CreateBuffer<T>(device, D3D11_USAGE_DEFAULT, bindFlag, initData, initDataSize, ppBuffer, (D3D11_CPU_ACCESS_FLAG)0);
 		}
 
-		template<typename T>
-		inline HRESULT CreateDefaultBuffer(ID3D11Device* device, D3D11_BIND_FLAG bindFlag, const std::vector<T>& initData, ID3D11Buffer** ppBuffer)
-		{
-			return CreateBuffer<T>(device, D3D11_USAGE_DEFAULT, bindFlag, initData.data(), sizeof(T) * initData.size(), ppBuffer, (D3D11_CPU_ACCESS_FLAG)0);
-		}
-
-
 	protected:
 		CComPtr<ID3D11Buffer> _buffer;
 	};

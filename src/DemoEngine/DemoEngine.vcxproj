@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="BufferBindable.h" />
     <ClInclude Include="ConstantBuffers.h" />
+    <ClInclude Include="DemoCube.h" />
     <ClInclude Include="DrawableBase.h" />
     <ClInclude Include="FangDev.h" />
     <ClInclude Include="FangEngine.h" />
@@ -166,16 +167,19 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Topology.h" />
+    <ClInclude Include="TransformConstantBuffer.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DemoCube.cpp" />
     <ClCompile Include="DrawableBase.cpp" />
     <ClCompile Include="FangDev.cpp" />
     <ClCompile Include="FangEngine.cpp" />
     <ClCompile Include="FangGraphics.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="TransformConstantBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">

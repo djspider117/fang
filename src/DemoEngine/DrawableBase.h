@@ -14,11 +14,8 @@ namespace Fang::Rendering::Drawables
 	public:
 		DrawableBase(const DrawableBase&) = delete;
 
-		DrawableBase() : _transform(DirectX::XMMatrixIdentity()) {}
-		DrawableBase(XMMATRIX transform) :
-			_transform(transform)
-		{
-		}
+		DrawableBase() = default;
+		virtual ~DrawableBase() = default;
 
 		virtual void AddBindable(IFangBindable* bindable) noexcept override;
 
@@ -28,17 +25,13 @@ namespace Fang::Rendering::Drawables
 
 		virtual void Draw(FangGraphics& graphics) override;
 
-		virtual DirectX::XMMATRIX GetTransform() override
+		virtual DirectX::XMMATRIX GetTransform() const override
 		{
-			// const ref?
-			return _transform;
+			return DirectX::XMMatrixIdentity();
 		}
 
 	protected:
 		const IndexBuffer* _indexBuffer = nullptr;
 		std::vector<IFangBindable*> _bindables;
-		XMMATRIX _transform;
 	};
-
-	HRESULT CreateDemoDrawable(FangGraphics& gfx, IFangDrawable** ppDrawable);
 }

@@ -2,6 +2,7 @@
 #include "FangGraphics.h"
 #include "Vertex.h"
 #include "DrawableBase.h"
+#include "DemoCube.h"
 
 namespace Fang::Rendering
 {
@@ -37,7 +38,7 @@ namespace Fang::Rendering
 		RETURN_FAILED(_dxgiDevice->GetAdapter(&_dxgiAdapter));
 		RETURN_FAILED(_dxgiAdapter->GetParent(__uuidof(IDXGIFactory2), (void**)&_dxgiFactory));
 
-		RETURN_FAILED(Fang::Rendering::Drawables::CreateDemoDrawable(*this, &_demo));
+		_demo = new Fang::Rendering::Drawables::DemoCube(*this);
 
 		return hr;
 	}
@@ -104,6 +105,8 @@ namespace Fang::Rendering
 
 		_deviceContext->OMSetDepthStencilState(_depthStencilState, 0);
 
+		_projectionMatrix = DirectX::XMMatrixPerspectiveLH(1, _viewport.Height / _viewport.Width, 0.03f, 10.0f);
+
 		return hr;
 	}
 
@@ -129,6 +132,7 @@ namespace Fang::Rendering
 		_deviceContext->OMSetRenderTargets(1, &(_rtv.p), _dsv);
 		_deviceContext->RSSetViewports(1, &_viewport);
 
+		_demo->Update(deltaTime);
 		_demo->Draw(*this);
 
 		//_deviceContext->DrawIndexed(36, 0, 0);

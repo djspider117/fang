@@ -8,7 +8,6 @@ namespace Fang::Rendering::Bindables
 	public:
 		IndexBuffer(FangGraphics& graphics, const USHORT* indices, UINT indicesSize)
 		{
-			_indicesCount = indicesSize;
 			THROW_FAILED_NOHR(CreateDefaultBuffer<USHORT>(graphics.GetDevice(), D3D11_BIND_INDEX_BUFFER, indices, indicesSize, &_buffer));
 		}
 
@@ -17,6 +16,7 @@ namespace Fang::Rendering::Bindables
 			graphics.GetContext()->IASetIndexBuffer(_buffer, DXGI_FORMAT_R16_UINT, 0);
 		}
 
+		void SetCount(UINT count) { _indicesCount = count; }
 		UINT GetCount() const { return _indicesCount; }
 
 	protected:
