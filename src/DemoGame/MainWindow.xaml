@@ -10,5 +10,6 @@
     <Grid>
         <SwapChainPanel x:Name="panel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                     Loaded="panel_Loaded"/>
+
     </Grid>
 </Window>

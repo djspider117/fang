@@ -20,15 +20,15 @@ namespace Fang::Rendering::Drawables
 		{
 			// Front face
 			{ -0.5f,  0.5f, 0, 255, 0, 0 }, // 0: top-left front
-			{ 0.5f,  0.5f, 0, 255, 0, 0 }, // 1: top-right front
-			{ 0.5f, -0.5f, 0, 255, 0, 0 }, // 2: bottom-right front
-			{ -0.5f, -0.5f, 0, 255, 0, 0 }, // 3: bottom-left front
+			{ 0.5f,  0.5f, 0, 255, 255, 0 }, // 1: top-right front
+			{ 0.5f, -0.5f, 0, 255, 0, 255 }, // 2: bottom-right front
+			{ -0.5f, -0.5f, 0, 0 , 255, 255 }, // 3: bottom-left front
 
 			// Back face
-			{ -0.5f,  0.5f,  0.5f, 0, 0, 255 }, // 4: top-left back
-			{ 0.5f,  0.5f,  0.5f, 0, 0, 255 }, // 5: top-right back
-			{ 0.5f, -0.5f,  0.5f, 0, 0, 255 }, // 6: bottom-right back
-			{ -0.5f, -0.5f,  0.5f, 0, 0, 255 }, // 7: bottom-left back
+			{ -0.5f,  0.5f,  1, 0, 0, 255 }, // 4: top-left back
+			{ 0.5f,  0.5f,  1, 255, 0, 255 }, // 5: top-right back
+			{ 0.5f, -0.5f,  1, 0, 255, 0 }, // 6: bottom-right back
+			{ -0.5f, -0.5f,  1, 255, 0, 0 }, // 7: bottom-left back
 		};
 
 		const USHORT indices[] =
@@ -79,19 +79,23 @@ namespace Fang::Rendering::Drawables
 
 		AddBindable(topo);
 		AddBindable(vbuff);
+		AddBindable(tcb);
 		AddBindable(vs);
 		AddBindable(ps);
 		AddBindable(il);
-		AddBindable(tcb);
 		SetIndexBuffer(ibuff);
 	}
 
 	void DemoCube::Update(double deltaTime)
 	{
-		_rotX += sin(4 * deltaTime) * 40;
+		_curTime += deltaTime;
+		_rotX += 1 * deltaTime;
 	}
 	DirectX::XMMATRIX DemoCube::GetTransform() const
 	{
-		return DirectX::XMMatrixRotationZ(_rotX) * DirectX::XMMatrixRotationX(_rotX);
+		if (UseSin)
+			return DirectX::XMMatrixRotationZ(_rotX) * DirectX::XMMatrixRotationY(_rotX) * DirectX::XMMatrixTranslation(OffsetX, 0, (sin(_rotX) + 1) * 5 + 3);
+
+		return DirectX::XMMatrixRotationZ(-_rotX) * DirectX::XMMatrixRotationX(-_rotX) * DirectX::XMMatrixTranslation(OffsetX, 0, (cos(_rotX) + 1) * 5 + 3);
 	}
 }

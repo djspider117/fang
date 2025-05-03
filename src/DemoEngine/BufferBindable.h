@@ -34,6 +34,7 @@ namespace Fang::Rendering::Bindables
 		}
 
 	protected:
+		UINT _stride;
 		CComPtr<ID3D11Buffer> _buffer;
 	};
 

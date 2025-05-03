@@ -51,7 +51,7 @@ namespace Fang::Rendering::Bindables
 			ctx->Unmap(_buffer, 0);
 		}
 	};
-
+	
 	template<typename T>
 	public class VertexConstantBuffer : public ConstantBufferBase<T>
 	{

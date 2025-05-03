@@ -39,6 +39,9 @@ namespace Fang::Rendering
 		RETURN_FAILED(_dxgiAdapter->GetParent(__uuidof(IDXGIFactory2), (void**)&_dxgiFactory));
 
 		_demo = new Fang::Rendering::Drawables::DemoCube(*this);
+		_demo2 = new Fang::Rendering::Drawables::DemoCube(*this);
+		_demo2->UseSin = false;
+		_demo2->OffsetX = 1;
 
 		return hr;
 	}
@@ -105,7 +108,8 @@ namespace Fang::Rendering
 
 		_deviceContext->OMSetDepthStencilState(_depthStencilState, 0);
 
-		_projectionMatrix = DirectX::XMMatrixPerspectiveLH(1, _viewport.Height / _viewport.Width, 0.03f, 10.0f);
+		float aspect = _viewport.Width / _viewport.Height;
+		_projectionMatrix = DirectX::XMMatrixPerspectiveFovLH(XM_PIDIV4, aspect, 0.005f, 1000.0f);
 
 		return hr;
 	}
@@ -113,14 +117,7 @@ namespace Fang::Rendering
 	void FangGraphics::Render(double deltaTime)
 	{
 		_currentTime += deltaTime;
-		// simulation
-		angle = sin(_currentTime) * 40;
-		
-		/*_worldTransform.transform = DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationZ(angle) * DirectX::XMMatrixPerspectiveLH(1, _viewport.Height / _viewport.Width, 0.03f, 10.0f));
-		
-		_deviceContext->UpdateSubresource(_worldTransformBuffer, 0, nullptr, &_worldTransform, 0, 0);*/
-
-		// render
+	
 		const float color[] = { 0.4f, 0.1f, 0.9f, 1.0f };
 		_deviceContext->ClearRenderTargetView(_rtv, color);
 		_deviceContext->ClearDepthStencilView(_dsv, D3D11_CLEAR_DEPTH, 1.0f, 0);
@@ -135,7 +132,8 @@ namespace Fang::Rendering
 		_demo->Update(deltaTime);
 		_demo->Draw(*this);
 
-		//_deviceContext->DrawIndexed(36, 0, 0);
+		_demo2->Update(deltaTime);
+		_demo2->Draw(*this);
 
 		_swapChain->Present(1, 0);
 	}

@@ -14,8 +14,11 @@ namespace Fang::Rendering::Drawables
 		virtual void Update(double deltaTime) override;
 		virtual DirectX::XMMATRIX GetTransform() const override;
 
+		bool UseSin = true;
+		float OffsetX = 0;
 	private:
 		float _rotX;
+		float _curTime;
 	};
 }
 

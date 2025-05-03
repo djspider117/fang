@@ -4,7 +4,7 @@ struct VSOut
     float4 pos : SV_Position;
 };
 
-cbuffer CBuf
+cbuffer CBuf : register(b0)
 {
     matrix transform;
 };
@@ -12,8 +12,10 @@ cbuffer CBuf
 VSOut main(float3 vpos : Position, float3 col : VertexColor)
 {
     VSOut rv;
-    rv.pos = mul(float4(vpos, 1), transform);
     rv.color = col;
-    
+    //rv.pos = float4(vpos, 1);
+    rv.pos = mul(float4(vpos, 1), transform);
     return rv;
+    //return mul(float4(vpos, 1), transform);
+    //return float4(vpos, 1);
 }

@@ -11,9 +11,12 @@ namespace Fang::Rendering::Bindables
 
 	void TransformConstantBuffer::Bind(FangGraphics& graphics) noexcept
 	{
-		_buff.Update(
+		/*_buff.Update(
 			graphics,
-			DirectX::XMMatrixTranspose(_parent.GetTransform()) * graphics.GetProjectionMatrix());
+			DirectX::XMMatrixTranspose(_parent.GetTransform()) * graphics.GetProjectionMatrix());*/
+		CBuf cb;
+		XMStoreFloat4x4(&cb.transform, DirectX::XMMatrixTranspose(_parent.GetTransform() * graphics.GetProjectionMatrix()));
+		_buff.Update(graphics, cb);
 
 		_buff.Bind(graphics);
 	}

@@ -29,6 +29,7 @@ namespace Fang
 
 	void FangEngine::HandleSizeChanged(UINT width, UINT height)
 	{
+		// memory leaks here
 		_initialized = false;
 
 		ThrowIfFailed(_graphicsSubsystem->Stop());

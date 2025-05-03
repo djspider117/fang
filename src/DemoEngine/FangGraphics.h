@@ -56,9 +56,7 @@ namespace Fang::Rendering
 		// temp stuff
 
 		Drawables::DemoCube* _demo;
-		float angle;
-
-		CComPtr<ID3D11Buffer> _worldTransformBuffer;
+		Drawables::DemoCube* _demo2;
 	};
 
 }
