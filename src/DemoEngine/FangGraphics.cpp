@@ -3,6 +3,7 @@
 #include "Vertex.h"
 #include "DrawableBase.h"
 #include "DemoCube.h"
+#include "GraphicsScene.h"
 
 namespace Fang::Rendering
 {
@@ -37,11 +38,6 @@ namespace Fang::Rendering
 		RETURN_FAILED(_d3dDevice->QueryInterface<IDXGIDevice2>(&_dxgiDevice));
 		RETURN_FAILED(_dxgiDevice->GetAdapter(&_dxgiAdapter));
 		RETURN_FAILED(_dxgiAdapter->GetParent(__uuidof(IDXGIFactory2), (void**)&_dxgiFactory));
-
-		_demo = new Fang::Rendering::Drawables::DemoCube(*this);
-		_demo2 = new Fang::Rendering::Drawables::DemoCube(*this);
-		_demo2->UseSin = false;
-		_demo2->OffsetX = 1;
 
 		return hr;
 	}
@@ -118,22 +114,19 @@ namespace Fang::Rendering
 	{
 		_currentTime += deltaTime;
 	
-		const float color[] = { 0.4f, 0.1f, 0.9f, 1.0f };
+		const float color[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		_deviceContext->ClearRenderTargetView(_rtv, color);
 		_deviceContext->ClearDepthStencilView(_dsv, D3D11_CLEAR_DEPTH, 1.0f, 0);
-
-		const UINT stride = sizeof(Vertex);
-		const UINT offset = 0;
 
 		//DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL forces us to rebind the rtv and the dsv
 		_deviceContext->OMSetRenderTargets(1, &(_rtv.p), _dsv);
 		_deviceContext->RSSetViewports(1, &_viewport);
 
-		_demo->Update(deltaTime);
-		_demo->Draw(*this);
-
-		_demo2->Update(deltaTime);
-		_demo2->Draw(*this);
+		if (_scene)
+		{
+			_scene->Update(deltaTime);
+			_scene->Draw(*this);
+		}
 
 		_swapChain->Present(1, 0);
 	}

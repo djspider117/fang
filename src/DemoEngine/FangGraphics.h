@@ -14,6 +14,8 @@ namespace Fang::Rendering::Drawables
 
 namespace Fang::Rendering
 {
+	class GraphicsScene;
+
 	public class FangGraphics : public IFangSubsystem
 	{
 	public:
@@ -32,6 +34,7 @@ namespace Fang::Rendering
 		inline DirectX::XMMATRIX GetProjectionMatrix() const noexcept { return _projectionMatrix; }
 
 		std::wstring GetShaderPath(std::wstring shaderName) const;
+		void SetScene(GraphicsScene* scene) { _scene = scene; }
 	private:
 
 		CComPtr<ISwapChainPanelNative> _swapChainContainer;
@@ -53,10 +56,8 @@ namespace Fang::Rendering
 		std::wstring _shaderCachePath;
 		double _currentTime;
 
-		// temp stuff
-
-		Drawables::DemoCube* _demo;
-		Drawables::DemoCube* _demo2;
+		// TODO: 0 proper memory management is here. cleanup
+		GraphicsScene* _scene;
 	};
 
 }

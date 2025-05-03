@@ -4,20 +4,51 @@
 
 namespace Fang::Rendering
 {
-	struct Vertex
+	struct BlindVertex
 	{
-		float X;
-		float Y;
-		float Z;
+		struct {
+			float X, Y, Z;
+		} Position;
 
-		byte R;
-		byte G;
-		byte B;
-		byte A;
+		static const D3D11_INPUT_ELEMENT_DESC InputLayoutElements[];
 	};
 
-	struct DemoBuffer
+	struct ColoredVertex
 	{
-		DirectX::XMMATRIX transform;
+		struct {
+			float X, Y, Z;
+		} Position;
+		struct {
+			byte R, G, B, A;
+		} VertexColor;
+
+		static const D3D11_INPUT_ELEMENT_DESC InputLayoutElements[];
+	};
+
+	struct VertexUV
+	{
+		struct {
+			float X, Y, Z;
+		} Position;
+		struct {
+			float u, v;
+		} UV;
+
+		static const D3D11_INPUT_ELEMENT_DESC InputLayoutElements[];
+	};
+
+	struct ColoredVertexUV
+	{
+		struct {
+			float X, Y, Z;
+		} Position;
+		struct {
+			byte R, G, B, A;
+		} VertexColor;
+		struct {
+			float u, v;
+		} UV;
+
+		static const D3D11_INPUT_ELEMENT_DESC InputLayoutElements[];
 	};
 }

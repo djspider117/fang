@@ -35,14 +35,9 @@ public sealed partial class MainWindow : Window
         _engine.Initialize((uint)panel.ActualWidth, (uint)panel.ActualHeight);
 
         SizeChanged += MainWindow_SizeChanged;
-        //new Thread(RenderThread).Start();
 
         CompositionTarget.Rendering += CompositionTarget_Rendering;
-        //DispatcherTimer timer = new DispatcherTimer();
-        //timer.Interval = TimeSpan.FromMicroseconds(16);
-        //timer.Tick += Timer_Tick;
         _lastRender = DateTime.Now;
-        //timer.Start();
     }
 
     private void CompositionTarget_Rendering(object? sender, object e)
@@ -52,31 +47,5 @@ public sealed partial class MainWindow : Window
         var deltaTime = now - _lastRender;
         _engine?.Tick(deltaTime.TotalSeconds);
         _lastRender = now;
-    }
-
-    private void RenderThread(object? obj)
-    {
-        while (true)
-        {
-            var now = DateTime.Now;
-
-            var deltaTime = now - _lastRender;
-            _engine?.Tick(deltaTime.TotalSeconds);
-            _lastRender = now;
-        }
-    }
-
-    private void Timer_Tick(object? sender, object e)
-    {
-        var now = DateTime.Now;
-
-        var deltaTime = now - _lastRender;
-        _engine?.Tick(deltaTime.TotalSeconds);
-        _lastRender = now;
-    }
-
-    private void CompositionTarget_Rendered(object? sender, RenderedEventArgs e)
-    {
-        
     }
 }

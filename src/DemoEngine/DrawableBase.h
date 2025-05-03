@@ -19,7 +19,7 @@ namespace Fang::Rendering::Drawables
 
 		virtual void AddBindable(IFangBindable* bindable) noexcept override;
 
-		virtual void SetIndexBuffer(IndexBuffer* ibuff) noexcept override;
+		virtual void SetIndexBuffer(const IndexBuffer* ibuff) noexcept override;
 
 		virtual void Update(double deltaTime) override;
 

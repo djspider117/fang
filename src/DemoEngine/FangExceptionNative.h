@@ -17,6 +17,8 @@ namespace Fang::Core
 		{
 		}
 
+		inline HRESULT GetHR() const { return _hr; }
+
 	private:
 		HRESULT _hr;
 	};

@@ -7,9 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" 
     Title="DemoGame">
-    <Grid>
-        <SwapChainPanel x:Name="panel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+    <SwapChainPanel x:Name="panel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                     Loaded="panel_Loaded"/>
-
-    </Grid>
 </Window>

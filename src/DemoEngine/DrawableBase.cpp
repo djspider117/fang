@@ -10,7 +10,7 @@ namespace Fang::Rendering::Drawables
 		_bindables.push_back(bindable);
 	}
 
-	void DrawableBase::SetIndexBuffer(IndexBuffer* ibuff) noexcept
+	void DrawableBase::SetIndexBuffer(const IndexBuffer* ibuff) noexcept
 	{
 		_indexBuffer = ibuff;
 		_bindables.push_back((IFangBindable*)_indexBuffer);

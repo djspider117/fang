@@ -7,12 +7,6 @@
 
 namespace Fang::Rendering::Bindables
 {
-	struct alignas(16) CBuf
-	{
-		DirectX::XMFLOAT4X4 transform;
-	};
-
-
 	public class TransformConstantBuffer : public IFangBindable
 	{
 	public:
@@ -20,7 +14,18 @@ namespace Fang::Rendering::Bindables
 		void Bind(FangGraphics& graphics) noexcept override;
 
 	private:
-		VertexConstantBuffer<CBuf> _buff;
+		VertexConstantBuffer<DirectX::XMMATRIX> _buff;
+		const IFangDrawable& _parent;
+	};
+
+	public class SharedTransformConstantBuffer : public IFangBindable
+	{
+	public:
+		SharedTransformConstantBuffer(FangGraphics&, const IFangDrawable& parent);
+		void Bind(FangGraphics& graphics) noexcept override;
+
+	private:
+		static std::unique_ptr<VertexConstantBuffer<DirectX::XMMATRIX>> _buff;
 		const IFangDrawable& _parent;
 	};
 }

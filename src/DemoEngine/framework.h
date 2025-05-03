@@ -17,6 +17,7 @@
 #define RETURN_FAILED(x) if(FAILED(hr = x)) return hr;
 #define THROW_FAILED(x) if(FAILED(hr = x)) throw Fang::Core::HResultException(hr);
 #define THROW_FAILED_NOHR(x) HRESULT hr = S_OK; if(FAILED(hr = x)) throw Fang::Core::HResultException(hr);
+#define COM_INIT(type_name, varname, expr) CComPtr<type_name> varname; THROW_FAILED(expr)
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
