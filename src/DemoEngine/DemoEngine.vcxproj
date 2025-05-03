@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BufferBindable.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="ConstantBuffers.h" />
     <ClInclude Include="DemoCube.h" />
     <ClInclude Include="DrawableBase.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="FangExceptionNative.h" />
     <ClInclude Include="FangGraphics.h" />
     <ClInclude Include="FangException.h" />
+    <ClInclude Include="FangInput.h" />
     <ClInclude Include="FangTexture2D.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GraphicsScene.h" />
@@ -178,11 +180,13 @@
     <ClInclude Include="VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DemoCube.cpp" />
     <ClCompile Include="DrawableBase.cpp" />
     <ClCompile Include="FangDev.cpp" />
     <ClCompile Include="FangEngine.cpp" />
     <ClCompile Include="FangGraphics.cpp" />
+    <ClCompile Include="FangInput.cpp" />
     <ClCompile Include="FangTexture2D.cpp" />
     <ClCompile Include="GraphicsScene.cpp" />
     <ClCompile Include="IndexedMesh.cpp" />

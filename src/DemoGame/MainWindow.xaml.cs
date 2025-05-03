@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System;
 using Microsoft.UI.Xaml.Media;
 using System.Threading;
+using Microsoft.UI.Xaml.Input;
 
 namespace DemoGame;
 
@@ -27,6 +28,9 @@ public sealed partial class MainWindow : Window
     public unsafe void panel_Loaded(object sender, RoutedEventArgs e)
     {
         panel.Loaded -= panel_Loaded;
+        panel.ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateY | ManipulationModes.TranslateInertia;
+        panel.ManipulationDelta += Panel_ManipulationDelta;
+        panel.PreviewKeyDown += Panel_PreviewKeyDown;
 
         var unk = Marshal.GetIUnknownForObject(panel);
         Marshal.QueryInterface(unk, ref IID_ISwapChainPanelNative, out var interfacePointer);
@@ -40,11 +44,53 @@ public sealed partial class MainWindow : Window
         _lastRender = DateTime.Now;
     }
 
+    private void Panel_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        if (e.Key == Windows.System.VirtualKey.W)
+        {
+            var cam = _engine?.GetCameraInterop() ?? throw new InvalidOperationException();
+
+            float forwardX = MathF.Cos(_pitch) * MathF.Sin(_yaw);
+            float forwardY = MathF.Sin(_pitch);
+            float forwardZ = MathF.Cos(_pitch) * MathF.Cos(_yaw);
+
+            // Apply movement
+            _x += forwardX * _moveSpeed * _deltaTime;
+            _y += forwardY * _moveSpeed * _deltaTime;
+            _z += forwardZ * _moveSpeed * _deltaTime;
+
+            cam.SetPosition(_x, _y, _z);
+        }
+    }
+
+    private void Panel_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+    {
+        var cam = _engine?.GetCameraInterop() ?? throw new InvalidOperationException();
+
+        var sensitivity = 20;
+
+        _yaw -= (float)e.Delta.Translation.X / (float)sensitivity;
+        _pitch -= (float)e.Delta.Translation.Y / (float)sensitivity;
+        _roll += e.Delta.Rotation / (float)sensitivity;
+
+        cam.SetRotations(_yaw * _deltaTime, _pitch * _deltaTime, _roll * _deltaTime);
+
+    }
+
+    private float _x, _y, _z;
+    private float _yaw;
+    private float _pitch;
+    private float _roll;
+    private float _moveSpeed = 2.5f;
+
+    private float _deltaTime;
+
     private void CompositionTarget_Rendering(object? sender, object e)
     {
         var now = DateTime.Now;
 
         var deltaTime = now - _lastRender;
+        _deltaTime = (float)deltaTime.TotalSeconds;
         _engine?.Tick(deltaTime.TotalSeconds);
         _lastRender = now;
     }

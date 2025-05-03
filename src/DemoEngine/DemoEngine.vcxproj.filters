@@ -22,6 +22,9 @@
     <Filter Include="Rendering\HighLevel">
       <UniqueIdentifier>{e63ae67e-ade1-4276-949a-c2c2c6f446b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{6b606ecf-8689-4153-9556-ead91d4d3c46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FangEngine.h">
@@ -98,6 +101,12 @@
     <ClInclude Include="TextureLoader.h">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="FangInput.h">
+      <Filter>Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FangEngine.cpp">
@@ -136,6 +145,12 @@
     </ClCompile>
     <ClCompile Include="FangTexture2D.cpp">
       <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="FangInput.cpp">
+      <Filter>Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

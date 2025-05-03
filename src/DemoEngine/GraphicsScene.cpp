@@ -4,6 +4,21 @@
 
 namespace Fang::Rendering
 {
+	GraphicsScene::~GraphicsScene()
+	{
+		if (_currentCamera)
+			delete _currentCamera;
+
+		for (IFangDrawable* drawable : _drawables)
+		{
+			delete drawable;
+		}
+
+		for (const auto& pair: _materials)
+		{
+			delete pair.second;
+		}
+	}
 	void GraphicsScene::AddDrawable(IFangDrawable* drawable)
 	{
 		assert(drawable != nullptr);

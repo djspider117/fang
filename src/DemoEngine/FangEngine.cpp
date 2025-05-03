@@ -36,7 +36,12 @@ namespace Fang
 
 		try
 		{
+			auto aspectRatio = width / (float)height;
 			auto* rv = new GraphicsScene();
+
+			auto* camera = new Camera(aspectRatio, XM_PIDIV4, 0.004f, 1000.0f);
+			rv->SetCurrentCamera(camera);
+			_camInterop = gcnew CameraInterop(camera);
 
 			auto mat1 = new BasicMaterial(*_graphicsSubsystem, L"VertexShader.cso", L"PixelShader.cso", ied, std::size(ied));
 			auto mat2 = new BasicMaterial(*_graphicsSubsystem, L"VertexShader.cso", L"WonkyShader.cso", ied, std::size(ied));

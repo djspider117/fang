@@ -19,10 +19,13 @@ namespace Fang
 
 		void Tick(double deltaTime);
 
+		inline const CameraInterop^ GetCameraInterop() { return _camInterop; }
 	private:
 		ISwapChainPanelNative* _swapChainPanelNativePtr;
 		String^ _shaderCacheLocation;
 		FangGraphics* _graphicsSubsystem;
+
+		CameraInterop^ _camInterop;
 
 		bool _initialized;
 	};

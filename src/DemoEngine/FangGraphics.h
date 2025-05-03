@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "Vertex.h"
 #include "IFangSubsystem.h"
+#include "Camera.h"
 
 using namespace DirectX;
 using namespace Fang::Core;
@@ -31,7 +32,7 @@ namespace Fang::Rendering
 
 		inline ID3D11DeviceContext* GetContext() const noexcept { return _deviceContext.p; }
 		inline ID3D11Device* GetDevice() const noexcept { return _d3dDevice.p; }
-		inline DirectX::XMMATRIX GetProjectionMatrix() const noexcept { return _projectionMatrix; }
+		XMMATRIX GetProjectionMatrix() const noexcept;
 
 		std::wstring GetShaderPath(std::wstring shaderName) const;
 		void SetScene(GraphicsScene* scene) { _scene = scene; }

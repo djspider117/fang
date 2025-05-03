@@ -131,6 +131,19 @@ namespace Fang::Rendering
 		_swapChain->Present(1, 0);
 	}
 
+	XMMATRIX FangGraphics::GetProjectionMatrix() const noexcept
+	{
+		if (_scene != nullptr)
+		{
+			const Camera* curCamera = _scene->GetCurrentCamera();
+			if (curCamera == nullptr)
+				return _projectionMatrix;
+
+			return curCamera->GetTransform();
+		}
+		return _projectionMatrix;
+	}
+
 	std::wstring FangGraphics::GetShaderPath(std::wstring shaderName) const
 	{
 		if (_shaderCachePath.back() != '\\')
